@@ -110,6 +110,7 @@ class UserShareView(APIView):
         user_a = request.user
         user_b_phone = request.data.get('shared_with', None)
         article_id = request.data.get('article_id', None)
+        reward_earned = request.data.get('article_id', 1)
         if user_b_phone and article_id:
             user_b = User.objects.filter(phone=user_b_phone).first()
             if user_b:
@@ -122,7 +123,7 @@ class UserShareView(APIView):
                     #                                                          article=article_obj,
                     #                                                          defaults={"reward_earned": 1})
                     user_share_obj = self.create_share_obj(
-                        connection_obj, article_obj, reward_earned=1)
+                        connection_obj, article_obj, reward_earned=reward_earned)
                     return Response({"status": True,
                                      "message": "shared successfully",
                                      "share_id": user_share_obj.id})
